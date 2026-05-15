@@ -9,7 +9,7 @@ const services = [
     title: "Website Development",
     description: "Custom websites built with modern technologies like React, Next.js, and responsive design principles.",
     features: ["Responsive Design", "SEO Optimization", "Fast Performance", "Content Management"],
-    price: "Starting from R15,000",
+    price: "Starting from R8,000",
     color: "primary"
   },
   {
@@ -17,7 +17,7 @@ const services = [
     title: "Logo Design",
     description: "Professional logo design that captures your brand identity and makes a lasting impression.",
     features: ["Brand Analysis", "Multiple Concepts", "Vector Files", "Brand Guidelines"],
-    price: "Starting from R3,500",
+    price: "Starting from R500",
     color: "accent"
   },
   {
@@ -25,7 +25,7 @@ const services = [
     title: "Mobile App Development",
     description: "Native and cross-platform mobile applications for iOS and Android devices.",
     features: ["Cross-Platform", "Native Performance", "App Store Deployment", "Maintenance"],
-    price: "Starting from R45,000",
+    price: "Starting from R12,000",
     color: "primary"
   },
   {
@@ -33,7 +33,7 @@ const services = [
     title: "POS Systems Development",
     description: "Custom Point of Sale systems with inventory management, sales tracking, and reporting features.",
     features: ["Inventory Management", "Sales Tracking", "Receipt Printing", "Multi-User Support"],
-    price: "Starting from R28,000",
+    price: "Starting from R9,000",
     color: "accent"
   },
   {
@@ -41,7 +41,7 @@ const services = [
     title: "AI Automation",
     description: "Build AI automation systems for businesses to streamline operations and increase efficiency.",
     features: ["Workflow Automation", "AI Integration", "Process Efficiency", "Custom Solutions"],
-    price: "Starting from R35,000",
+    price: "Starting from R15,000",
     color: "primary"
   },
   {
@@ -49,7 +49,7 @@ const services = [
     title: "Website Maintenance",
     description: "Ongoing website maintenance, updates, and technical support services.",
     features: ["Regular Updates", "Security Monitoring", "Performance Optimization", "24/7 Support"],
-    price: "Starting from R1,800/month",
+    price: "Starting from R500 - R1,000/month",
     color: "accent"
   }
 ];
@@ -79,7 +79,7 @@ export default function Services() {
       y: 0,
       transition: {
         duration: 0.6,
-        ease: 'easeOut',
+        ease: 'easeOut' as const,
       },
     },
   };
