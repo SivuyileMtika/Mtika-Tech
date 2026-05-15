@@ -55,11 +55,10 @@ const services = [
 ];
 
 export default function Services() {
-  const scrollToContact = () => {
-    const element = document.getElementById('contact');
-    if (element) {
-      element.scrollIntoView({ behavior: 'smooth' });
-    }
+  const enquireAboutService = (serviceTitle: string) => {
+    const subject = `Enquiry: ${serviceTitle}`;
+    const body = `Hello Mtika Technologies,\n\nI am interested in your ${serviceTitle} service and would like to learn more.\n\nPlease get back to me at your earliest convenience.\n\nThank you.`;
+    window.location.href = `mailto:mtikatech@gmail.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
   };
 
   const containerVariants = {
@@ -185,7 +184,7 @@ export default function Services() {
                 </ul>
                 <motion.div whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }}>
                   <Button
-                    onClick={scrollToContact}
+                    onClick={() => enquireAboutService(service.title)}
                     variant="outline"
                     className={`w-full transition-all duration-300 ${
                       service.color === 'primary'
