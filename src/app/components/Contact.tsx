@@ -17,20 +17,21 @@ export default function Contact() {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    
-    // In a real application, you would send this data to your backend
-    console.log('Form submitted:', formData);
-    
-    // Show success message
-    toast.success('Thank you for your inquiry! We\'ll get back to you soon.');
-    
-    // Reset form
-    setFormData({
-      name: '',
-      email: '',
-      phone: '',
-      message: ''
-    });
+
+    const subject = `Website Enquiry from ${formData.name}`;
+    const body = [
+      `Name: ${formData.name}`,
+      `Email: ${formData.email}`,
+      formData.phone ? `Phone: ${formData.phone}` : '',
+      '',
+      formData.message,
+    ].filter(Boolean).join('\n');
+
+    window.location.href = `mailto:mtikatech@gmail.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+
+    toast.success("Opening your email client...");
+
+    setFormData({ name: '', email: '', phone: '', message: '' });
   };
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
