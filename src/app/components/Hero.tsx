@@ -1,7 +1,6 @@
 import { ArrowRight, Code, Palette, ShoppingCart } from 'lucide-react';
 import { motion } from 'motion/react';
 import { Button } from './ui/button';
-import mtikaLogo from 'figma:asset/1ad0f5179549d95264af1d200fd4625def5dae85.png';
 
 export default function Hero() {
   const scrollToServices = () => {
@@ -50,10 +49,10 @@ export default function Hero() {
   return (
     <section id="home" className="pt-20 bg-gradient-to-br from-background via-secondary/30 to-accent/5 relative overflow-hidden">
       {/* Blurred Background Logo */}
-      <div 
+      <div
         className="absolute inset-0 opacity-5 bg-center bg-no-repeat bg-contain"
         style={{
-          backgroundImage: `url(${mtikaLogo})`,
+          backgroundImage: "url('/logo.png')",
           filter: 'blur(20px) brightness(0.8)',
           transform: 'scale(1.5)',
           zIndex: 0

@@ -3,7 +3,7 @@ import { Menu, X } from 'lucide-react';
 import { motion } from 'motion/react';
 import { Button } from './ui/button';
 import { ImageWithFallback } from './figma/ImageWithFallback';
-import mtikaLogo from 'figma:asset/1ad0f5179549d95264af1d200fd4625def5dae85.png';
+const mtikaLogo = '/logo.png';
 
 export default function Header() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
