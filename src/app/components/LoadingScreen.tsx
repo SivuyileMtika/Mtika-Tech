@@ -15,44 +15,37 @@ export default function LoadingScreen() {
         }
       }}
     >
-      {/* Rings — absolutely centered relative to the full-screen overlay */}
-      <motion.div
-        className="absolute border-4 border-primary/30 rounded-full"
-        style={{
-          width: 'min(400px, 80vw)',
-          height: 'min(400px, 80vw)',
-          top: '50%',
-          left: '50%',
-          translateX: '-50%',
-          translateY: '-50%',
-        }}
-        animate={{ scale: [1, 1.2, 1], rotate: 360, opacity: [0.3, 0.6, 0.3] }}
-        transition={{ duration: 2, repeat: Infinity, ease: 'easeInOut', type: 'tween' }}
-      />
-      <motion.div
-        className="absolute border-4 border-accent/30 rounded-full"
-        style={{
-          width: 'min(480px, 95vw)',
-          height: 'min(480px, 95vw)',
-          top: '50%',
-          left: '50%',
-          translateX: '-50%',
-          translateY: '-50%',
-        }}
-        animate={{ scale: [1.2, 1, 1.2], rotate: -360, opacity: [0.6, 0.3, 0.6] }}
-        transition={{ duration: 2, repeat: Infinity, ease: 'easeInOut', type: 'tween' }}
-      />
-
-      {/* Logo — centered with flex on the full overlay */}
-      <div className="w-full h-full flex items-center justify-center">
-        <motion.img
-          src={mtikaLogo}
-          alt="Mtika Technologies"
-          className="h-24 w-auto sm:h-36 md:h-48 relative z-10"
-          initial={{ scale: 0, rotate: -180 }}
-          animate={{ scale: 1, rotate: 0 }}
-          transition={{ duration: 1, ease: 'easeOut' }}
-        />
+      {/* Full-screen centering wrapper */}
+      <div className="absolute inset-0 flex items-center justify-center">
+        {/* Sized container — rings position relative to this */}
+        <div
+          className="relative flex items-center justify-center"
+          style={{ width: 'min(480px, 95vw)', height: 'min(480px, 95vw)' }}
+        >
+          {/* Inner ring */}
+          <motion.div
+            className="absolute inset-0 m-auto border-4 border-primary/30 rounded-full"
+            style={{ width: 'min(400px, 80vw)', height: 'min(400px, 80vw)' }}
+            animate={{ scale: [1, 1.2, 1], rotate: 360, opacity: [0.3, 0.6, 0.3] }}
+            transition={{ duration: 2, repeat: Infinity, ease: 'easeInOut', type: 'tween' }}
+          />
+          {/* Outer ring */}
+          <motion.div
+            className="absolute inset-0 m-auto border-4 border-accent/30 rounded-full"
+            style={{ width: 'min(480px, 95vw)', height: 'min(480px, 95vw)' }}
+            animate={{ scale: [1.2, 1, 1.2], rotate: -360, opacity: [0.6, 0.3, 0.6] }}
+            transition={{ duration: 2, repeat: Infinity, ease: 'easeInOut', type: 'tween' }}
+          />
+          {/* Logo */}
+          <motion.img
+            src={mtikaLogo}
+            alt="Mtika Technologies"
+            className="relative z-10 h-24 w-auto sm:h-36 md:h-48"
+            initial={{ scale: 0, rotate: -180 }}
+            animate={{ scale: 1, rotate: 0 }}
+            transition={{ duration: 1, ease: 'easeOut' }}
+          />
+        </div>
       </div>
     </motion.div>
   );
