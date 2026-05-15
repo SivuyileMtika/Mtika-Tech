@@ -192,4 +192,15 @@
 
 html {
   font-size: var(--font-size);
+  scroll-behavior: smooth;
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+}
+
+body {
+  overscroll-behavior-y: none;
+}
+
+button, a, [role="button"] {
+  touch-action: manipulation;
 }

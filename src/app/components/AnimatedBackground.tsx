@@ -1,15 +1,15 @@
 import { motion } from 'motion/react';
 
-export default function AnimatedBackground() {
-  const particles = Array.from({ length: 50 }, (_, i) => ({
-    id: i,
-    x: Math.random() * 100,
-    y: Math.random() * 100,
-    size: Math.random() * 4 + 1,
-    duration: Math.random() * 20 + 10,
-    delay: Math.random() * 5,
-  }));
+const particles = Array.from({ length: 20 }, (_, i) => ({
+  id: i,
+  x: Math.random() * 100,
+  y: Math.random() * 100,
+  size: Math.random() * 3 + 1,
+  duration: Math.random() * 20 + 15,
+  delay: Math.random() * 5,
+}));
 
+export default function AnimatedBackground() {
   return (
     <div className="fixed inset-0 pointer-events-none overflow-hidden z-0">
       {/* Animated Grid Background */}
@@ -25,7 +25,7 @@ export default function AnimatedBackground() {
                 className="text-primary"
                 initial={{ pathLength: 0 }}
                 animate={{ pathLength: 1 }}
-                transition={{ duration: 2, ease: "easeInOut" }}
+                transition={{ duration: 2, ease: 'easeInOut' }}
               />
             </pattern>
           </defs>
@@ -33,16 +33,17 @@ export default function AnimatedBackground() {
         </svg>
       </div>
 
-      {/* Floating Particles */}
+      {/* Floating Particles — reduced to 20, no blur */}
       {particles.map((particle) => (
         <motion.div
           key={particle.id}
-          className="absolute rounded-full bg-gradient-to-br from-primary/30 to-accent/30 blur-[1px]"
+          className="absolute rounded-full bg-gradient-to-br from-primary/30 to-accent/30"
           style={{
             left: `${particle.x}%`,
             top: `${particle.y}%`,
             width: `${particle.size}px`,
             height: `${particle.size}px`,
+            willChange: 'transform, opacity',
           }}
           animate={{
             y: [0, -30, 0],
@@ -53,38 +54,24 @@ export default function AnimatedBackground() {
             duration: particle.duration,
             repeat: Infinity,
             delay: particle.delay,
-            ease: "easeInOut",
-            type: "tween",
+            ease: 'easeInOut',
+            type: 'tween',
           }}
         />
       ))}
 
       {/* Glowing Orbs */}
       <motion.div
-        className="absolute top-1/4 left-1/4 w-96 h-96 rounded-full bg-primary/5 blur-3xl"
-        animate={{
-          scale: [1, 1.2, 1],
-          opacity: [0.3, 0.5, 0.3],
-        }}
-        transition={{
-          duration: 8,
-          repeat: Infinity,
-          ease: "easeInOut",
-          type: "tween",
-        }}
+        className="absolute top-1/4 left-1/4 w-64 h-64 md:w-96 md:h-96 rounded-full bg-primary/5 blur-3xl"
+        style={{ willChange: 'transform, opacity' }}
+        animate={{ scale: [1, 1.2, 1], opacity: [0.3, 0.5, 0.3] }}
+        transition={{ duration: 8, repeat: Infinity, ease: 'easeInOut', type: 'tween' }}
       />
       <motion.div
-        className="absolute bottom-1/4 right-1/4 w-96 h-96 rounded-full bg-accent/5 blur-3xl"
-        animate={{
-          scale: [1.2, 1, 1.2],
-          opacity: [0.5, 0.3, 0.5],
-        }}
-        transition={{
-          duration: 8,
-          repeat: Infinity,
-          ease: "easeInOut",
-          type: "tween",
-        }}
+        className="absolute bottom-1/4 right-1/4 w-64 h-64 md:w-96 md:h-96 rounded-full bg-accent/5 blur-3xl"
+        style={{ willChange: 'transform, opacity' }}
+        animate={{ scale: [1.2, 1, 1.2], opacity: [0.5, 0.3, 0.5] }}
+        transition={{ duration: 8, repeat: Infinity, ease: 'easeInOut', type: 'tween' }}
       />
 
       {/* Digital Circuit Lines */}
