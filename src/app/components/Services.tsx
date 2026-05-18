@@ -32,13 +32,12 @@ const services: Service[] = [
     color: "primary",
     project: {
       name: "Doctor Appointment System",
-      description: "A full-stack web application designed to simplify how patients book and manage appointments with doctors. The system provides a seamless experience for both patients and medical staff.",
+      description: "Built a full-stack appointment booking system that eliminated manual WhatsApp scheduling for a South African GP practice.",
       features: [
-        "Online appointment booking & scheduling",
-        "Doctor availability management",
-        "Patient registration & profiles",
-        "Appointment reminders & notifications",
-        "Admin dashboard for managing bookings",
+        "WhatsApp bot — patients book, pick time slots & payment method without human involvement",
+        "Live doctor dashboard — approve or reject bookings with one click, patient notified instantly",
+        "Auto-pilot mode — busy days run themselves; duplicates rejected automatically",
+        "Cross-channel deduplication — website and WhatsApp share the same live availability",
       ],
       url: "https://dependable-illumination-production-3c79.up.railway.app",
     },
