@@ -1,4 +1,4 @@
-import { Code, Palette, Smartphone, Globe, Settings, Zap, ArrowRight, Bot, ShoppingCart } from 'lucide-react';
+import { Code, Palette, Smartphone, Globe, Settings, Zap, ArrowRight, Bot, ShoppingCart, ExternalLink } from 'lucide-react';
 import { motion } from 'motion/react';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from './ui/card';
 import { Button } from './ui/button';
@@ -10,7 +10,8 @@ const services = [
     description: "Custom websites built with modern technologies like React, Next.js, and responsive design principles.",
     features: ["Responsive Design", "SEO Optimization", "Fast Performance", "Content Management"],
     price: "Starting from R8,000",
-    color: "primary"
+    color: "primary",
+    projectUrl: "https://dependable-illumination-production-3c79.up.railway.app"
   },
   {
     icon: <Palette className="h-8 w-8" />,
@@ -195,6 +196,19 @@ export default function Services() {
                     Learn More
                   </Button>
                 </motion.div>
+                {'projectUrl' in service && service.projectUrl && (
+                  <motion.div whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }} className="mt-3">
+                    <Button
+                      asChild
+                      className="w-full bg-primary hover:bg-primary/90 text-primary-foreground gap-2"
+                    >
+                      <a href={service.projectUrl} target="_blank" rel="noopener noreferrer">
+                        <ExternalLink className="h-4 w-4" />
+                        View Recent Project
+                      </a>
+                    </Button>
+                  </motion.div>
+                )}
               </CardContent>
             </Card>
             </motion.div>
