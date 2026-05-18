@@ -1,10 +1,28 @@
-import { Code, Palette, Smartphone, Globe, Settings, Zap, ArrowRight, Bot, ShoppingCart, ExternalLink, X } from 'lucide-react';
-import { motion, AnimatePresence } from 'motion/react';
+import { Palette, Smartphone, Globe, Zap, ArrowRight, Bot, ShoppingCart, ExternalLink } from 'lucide-react';
+import { motion } from 'motion/react';
 import { useState } from 'react';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from './ui/card';
 import { Button } from './ui/button';
+import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle } from './ui/dialog';
 
-const services = [
+type Project = {
+  name: string;
+  description: string;
+  features: string[];
+  url: string;
+};
+
+type Service = {
+  icon: React.ReactNode;
+  title: string;
+  description: string;
+  features: string[];
+  price: string;
+  color: 'primary' | 'accent';
+  project?: Project;
+};
+
+const services: Service[] = [
   {
     icon: <Globe className="h-8 w-8" />,
     title: "Website Development",
@@ -12,7 +30,18 @@ const services = [
     features: ["Responsive Design", "SEO Optimization", "Fast Performance", "Content Management"],
     price: "Starting from R8,000",
     color: "primary",
-    projectUrl: "https://dependable-illumination-production-3c79.up.railway.app"
+    project: {
+      name: "Doctor Appointment System",
+      description: "A full-stack web application designed to simplify how patients book and manage appointments with doctors. The system provides a seamless experience for both patients and medical staff.",
+      features: [
+        "Online appointment booking & scheduling",
+        "Doctor availability management",
+        "Patient registration & profiles",
+        "Appointment reminders & notifications",
+        "Admin dashboard for managing bookings",
+      ],
+      url: "https://dependable-illumination-production-3c79.up.railway.app",
+    },
   },
   {
     icon: <Palette className="h-8 w-8" />,
@@ -20,7 +49,7 @@ const services = [
     description: "Professional logo design that captures your brand identity and makes a lasting impression.",
     features: ["Brand Analysis", "Multiple Concepts", "Vector Files", "Brand Guidelines"],
     price: "Starting from R500",
-    color: "accent"
+    color: "accent",
   },
   {
     icon: <Smartphone className="h-8 w-8" />,
@@ -28,7 +57,7 @@ const services = [
     description: "Native and cross-platform mobile applications for iOS and Android devices.",
     features: ["Cross-Platform", "Native Performance", "App Store Deployment", "Maintenance"],
     price: "Starting from R12,000",
-    color: "primary"
+    color: "primary",
   },
   {
     icon: <ShoppingCart className="h-8 w-8" />,
@@ -36,7 +65,7 @@ const services = [
     description: "Custom Point of Sale systems with inventory management, sales tracking, and reporting features.",
     features: ["Inventory Management", "Sales Tracking", "Digital Receipt Printing", "Multi-User Support"],
     price: "Starting from R9,000",
-    color: "accent"
+    color: "accent",
   },
   {
     icon: <Bot className="h-8 w-8" />,
@@ -44,7 +73,7 @@ const services = [
     description: "Build AI automation systems for businesses to streamline operations and increase efficiency.",
     features: ["Workflow Automation", "AI Integration", "Process Efficiency", "Custom Solutions"],
     price: "Starting from R15,000",
-    color: "primary"
+    color: "primary",
   },
   {
     icon: <Zap className="h-8 w-8" />,
@@ -52,39 +81,38 @@ const services = [
     description: "Ongoing website maintenance, updates, and technical support services.",
     features: ["Regular Updates", "Security Monitoring", "Performance Optimization", "24/7 Support"],
     price: "Starting from R500 - R1,000/month",
-    color: "accent"
-  }
+    color: "accent",
+  },
 ];
 
+const containerVariants = {
+  hidden: { opacity: 0 },
+  visible: {
+    opacity: 1,
+    transition: { staggerChildren: 0.1 },
+  },
+};
+
+const cardVariants = {
+  hidden: { opacity: 0, y: 50 },
+  visible: {
+    opacity: 1,
+    y: 0,
+    transition: { duration: 0.6, ease: 'easeOut' as const },
+  },
+};
+
+const btnHover = { scale: 1.02 };
+const btnTap = { scale: 0.98 };
+const iconHover = { rotate: [0, -10, 10, -10, 0], scale: 1.1 };
+
 export default function Services() {
-  const [showProjectModal, setShowProjectModal] = useState(false);
+  const [activeProject, setActiveProject] = useState<Project | null>(null);
 
   const enquireAboutService = (serviceTitle: string) => {
     const subject = `Enquiry: ${serviceTitle}`;
     const body = `Hello Mtika Technologies,\n\nI am interested in your ${serviceTitle} service and would like to learn more.\n\nPlease get back to me at your earliest convenience.\n\nThank you.`;
     window.location.href = `mailto:mtikatech@gmail.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
-  };
-
-  const containerVariants = {
-    hidden: { opacity: 0 },
-    visible: {
-      opacity: 1,
-      transition: {
-        staggerChildren: 0.1,
-      },
-    },
-  };
-
-  const cardVariants = {
-    hidden: { opacity: 0, y: 50 },
-    visible: {
-      opacity: 1,
-      y: 0,
-      transition: {
-        duration: 0.6,
-        ease: 'easeOut' as const,
-      },
-    },
   };
 
   return (
@@ -125,179 +153,137 @@ export default function Services() {
               transition={{ type: 'spring', stiffness: 300 }}
             >
               <Card className="h-full hover:shadow-xl transition-all duration-300 border-primary/10 hover:border-accent/30 group">
-              <CardHeader>
-                <div className="flex items-center justify-between mb-4">
-                  <motion.div
-                    className={`bg-gradient-to-br ${
-                      service.color === 'primary'
-                        ? 'from-primary/10 to-accent/5 group-hover:from-primary/20 group-hover:to-accent/10'
-                        : 'from-accent/10 to-primary/5 group-hover:from-accent/20 group-hover:to-primary/10'
-                    } p-3 rounded-full transition-all duration-300 border ${
-                      service.color === 'primary'
-                        ? 'border-primary/10 group-hover:border-accent/20'
-                        : 'border-accent/10 group-hover:border-primary/20'
-                    }`}
-                    whileHover={{ rotate: [0, -10, 10, -10, 0], scale: 1.1 }}
-                    transition={{ duration: 0.5 }}
-                  >
-                    <div
-                      className={
+                <CardHeader>
+                  <div className="flex items-center justify-between mb-4">
+                    <motion.div
+                      className={`bg-linear-to-br ${
                         service.color === 'primary'
-                          ? 'text-primary group-hover:text-accent transition-colors duration-300'
-                          : 'text-accent group-hover:text-primary transition-colors duration-300'
-                      }
+                          ? 'from-primary/10 to-accent/5 group-hover:from-primary/20 group-hover:to-accent/10'
+                          : 'from-accent/10 to-primary/5 group-hover:from-accent/20 group-hover:to-primary/10'
+                      } p-3 rounded-full transition-all duration-300 border ${
+                        service.color === 'primary'
+                          ? 'border-primary/10 group-hover:border-accent/20'
+                          : 'border-accent/10 group-hover:border-primary/20'
+                      }`}
+                      whileHover={iconHover}
+                      transition={{ duration: 0.5 }}
                     >
-                      {service.icon}
-                    </div>
-                  </motion.div>
-                  <motion.div
-                    className={`text-sm font-semibold ${
-                      service.color === 'primary' ? 'text-primary bg-primary/10' : 'text-accent bg-accent/10'
-                    } px-3 py-1 rounded-full`}
-                    whileHover={{ scale: 1.1 }}
-                  >
-                    {service.price}
-                  </motion.div>
-                </div>
-                <CardTitle className="text-xl group-hover:text-primary transition-colors">
-                  {service.title}
-                </CardTitle>
-                <CardDescription className="text-muted-foreground">
-                  {service.description}
-                </CardDescription>
-              </CardHeader>
-              <CardContent>
-                <ul className="space-y-2 mb-6">
-                  {service.features.map((feature, featureIndex) => (
-                    <motion.li
-                      key={featureIndex}
-                      className="flex items-center text-sm"
-                      initial={{ opacity: 0, x: -20 }}
-                      whileInView={{ opacity: 1, x: 0 }}
-                      viewport={{ once: true }}
-                      transition={{ delay: featureIndex * 0.1 }}
+                      <div
+                        className={
+                          service.color === 'primary'
+                            ? 'text-primary group-hover:text-accent transition-colors duration-300'
+                            : 'text-accent group-hover:text-primary transition-colors duration-300'
+                        }
+                      >
+                        {service.icon}
+                      </div>
+                    </motion.div>
+                    <motion.div
+                      className={`text-sm font-semibold ${
+                        service.color === 'primary' ? 'text-primary bg-primary/10' : 'text-accent bg-accent/10'
+                      } px-3 py-1 rounded-full`}
+                      whileHover={{ scale: 1.1 }}
                     >
-                      <ArrowRight
-                        className={`h-4 w-4 mr-2 ${
-                          service.color === 'primary' ? 'text-primary' : 'text-accent'
-                        }`}
-                      />
-                      {feature}
-                    </motion.li>
-                  ))}
-                </ul>
-                <motion.div whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }}>
-                  <Button
-                    onClick={() => enquireAboutService(service.title)}
-                    variant="outline"
-                    className={`w-full transition-all duration-300 ${
-                      service.color === 'primary'
-                        ? 'border-primary/20 hover:bg-primary hover:text-primary-foreground group-hover:border-primary'
-                        : 'border-accent/20 hover:bg-accent hover:text-accent-foreground group-hover:border-accent'
-                    }`}
-                  >
-                    Learn More
-                  </Button>
-                </motion.div>
-                {'projectUrl' in service && service.projectUrl && (
-                  <motion.div whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }} className="mt-3">
+                      {service.price}
+                    </motion.div>
+                  </div>
+                  <CardTitle className="text-xl group-hover:text-primary transition-colors">
+                    {service.title}
+                  </CardTitle>
+                  <CardDescription className="text-muted-foreground">
+                    {service.description}
+                  </CardDescription>
+                </CardHeader>
+                <CardContent>
+                  <ul className="space-y-2 mb-6">
+                    {service.features.map((feature, featureIndex) => (
+                      <motion.li
+                        key={featureIndex}
+                        className="flex items-center text-sm"
+                        initial={{ opacity: 0, x: -20 }}
+                        whileInView={{ opacity: 1, x: 0 }}
+                        viewport={{ once: true }}
+                        transition={{ delay: featureIndex * 0.1 }}
+                      >
+                        <ArrowRight
+                          className={`h-4 w-4 mr-2 ${
+                            service.color === 'primary' ? 'text-primary' : 'text-accent'
+                          }`}
+                        />
+                        {feature}
+                      </motion.li>
+                    ))}
+                  </ul>
+                  <motion.div whileHover={btnHover} whileTap={btnTap}>
                     <Button
-                      onClick={() => setShowProjectModal(true)}
-                      className="w-full bg-primary hover:bg-primary/90 text-primary-foreground gap-2"
+                      onClick={() => enquireAboutService(service.title)}
+                      variant="outline"
+                      className={`w-full transition-all duration-300 ${
+                        service.color === 'primary'
+                          ? 'border-primary/20 hover:bg-primary hover:text-primary-foreground group-hover:border-primary'
+                          : 'border-accent/20 hover:bg-accent hover:text-accent-foreground group-hover:border-accent'
+                      }`}
                     >
-                      <ExternalLink className="h-4 w-4" />
-                      View Recent Project
+                      Learn More
                     </Button>
                   </motion.div>
-                )}
-              </CardContent>
-            </Card>
+                  {service.project && (
+                    <motion.div whileHover={btnHover} whileTap={btnTap} className="mt-3">
+                      <Button
+                        onClick={() => setActiveProject(service.project!)}
+                        className="w-full bg-primary hover:bg-primary/90 text-primary-foreground gap-2"
+                      >
+                        <ExternalLink className="h-4 w-4" />
+                        View Recent Project
+                      </Button>
+                    </motion.div>
+                  )}
+                </CardContent>
+              </Card>
             </motion.div>
           ))}
         </motion.div>
       </div>
 
-      <AnimatePresence>
-        {showProjectModal && (
-          <motion.div
-            className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            onClick={() => setShowProjectModal(false)}
-          >
-            <motion.div
-              className="bg-background border border-primary/20 rounded-2xl shadow-2xl max-w-lg w-full p-8 relative"
-              initial={{ opacity: 0, scale: 0.9, y: 20 }}
-              animate={{ opacity: 1, scale: 1, y: 0 }}
-              exit={{ opacity: 0, scale: 0.9, y: 20 }}
-              transition={{ type: 'spring', stiffness: 300, damping: 25 }}
-              onClick={(e) => e.stopPropagation()}
-            >
-              <button
-                type="button"
-                aria-label="Close"
-                onClick={() => setShowProjectModal(false)}
-                className="absolute top-4 right-4 text-muted-foreground hover:text-foreground transition-colors"
-              >
-                <X className="h-5 w-5" />
-              </button>
-
-              <div className="flex items-center gap-3 mb-4">
-                <div className="bg-primary/10 p-3 rounded-full border border-primary/20">
-                  <Globe className="h-6 w-6 text-primary" />
-                </div>
-                <div>
-                  <p className="text-xs text-muted-foreground uppercase tracking-wide font-medium">Recent Project</p>
-                  <h3 className="text-xl font-bold text-foreground">Doctor Appointment System</h3>
-                </div>
+      <Dialog open={activeProject !== null} onOpenChange={(open) => { if (!open) setActiveProject(null); }}>
+        <DialogContent className="max-w-lg">
+          <DialogHeader>
+            <div className="flex items-center gap-3">
+              <div className="bg-primary/10 p-3 rounded-full border border-primary/20">
+                <Globe className="h-6 w-6 text-primary" />
               </div>
-
-              <p className="text-muted-foreground mb-4 leading-relaxed">
-                A full-stack web application designed to simplify how patients book and manage appointments with doctors. The system provides a seamless experience for both patients and medical staff.
-              </p>
-
-              <ul className="space-y-2 mb-6">
-                {[
-                  "Online appointment booking & scheduling",
-                  "Doctor availability management",
-                  "Patient registration & profiles",
-                  "Appointment reminders & notifications",
-                  "Admin dashboard for managing bookings",
-                ].map((feature, i) => (
-                  <li key={i} className="flex items-center text-sm text-foreground">
-                    <ArrowRight className="h-4 w-4 mr-2 text-primary shrink-0" />
-                    {feature}
-                  </li>
-                ))}
-              </ul>
-
-              <div className="flex gap-3">
-                <Button
-                  variant="outline"
-                  className="flex-1 border-primary/20"
-                  onClick={() => setShowProjectModal(false)}
-                >
-                  Close
-                </Button>
-                <Button
-                  asChild
-                  className="flex-1 bg-primary hover:bg-primary/90 text-primary-foreground gap-2"
-                >
-                  <a
-                    href="https://dependable-illumination-production-3c79.up.railway.app"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                  >
-                    <ExternalLink className="h-4 w-4" />
-                    Visit Site
-                  </a>
-                </Button>
+              <div>
+                <p className="text-xs text-muted-foreground uppercase tracking-wide font-medium">Recent Project</p>
+                <DialogTitle className="text-xl">{activeProject?.name}</DialogTitle>
               </div>
-            </motion.div>
-          </motion.div>
-        )}
-      </AnimatePresence>
+            </div>
+            <DialogDescription className="leading-relaxed">
+              {activeProject?.description}
+            </DialogDescription>
+          </DialogHeader>
+          <ul className="space-y-2">
+            {activeProject?.features.map((feature, i) => (
+              <li key={i} className="flex items-center text-sm text-foreground">
+                <ArrowRight className="h-4 w-4 mr-2 text-primary shrink-0" />
+                {feature}
+              </li>
+            ))}
+          </ul>
+          <DialogFooter>
+            <Button variant="outline" onClick={() => setActiveProject(null)}>
+              Close
+            </Button>
+            {activeProject && (
+              <Button asChild className="bg-primary hover:bg-primary/90 text-primary-foreground gap-2">
+                <a href={activeProject.url} target="_blank" rel="noopener noreferrer">
+                  <ExternalLink className="h-4 w-4" />
+                  Visit Site
+                </a>
+              </Button>
+            )}
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
     </section>
   );
 }
