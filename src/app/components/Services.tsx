@@ -33,7 +33,7 @@ const services = [
     icon: <ShoppingCart className="h-8 w-8" />,
     title: "POS Systems Development",
     description: "Custom Point of Sale systems with inventory management, sales tracking, and reporting features.",
-    features: ["Inventory Management", "Sales Tracking", "Receipt Printing", "Multi-User Support"],
+    features: ["Inventory Management", "Sales Tracking", "Digital Receipt Printing", "Multi-User Support"],
     price: "Starting from R9,000",
     color: "accent"
   },
