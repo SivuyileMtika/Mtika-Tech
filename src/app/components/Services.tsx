@@ -1,5 +1,6 @@
-import { Code, Palette, Smartphone, Globe, Settings, Zap, ArrowRight, Bot, ShoppingCart, ExternalLink } from 'lucide-react';
-import { motion } from 'motion/react';
+import { Code, Palette, Smartphone, Globe, Settings, Zap, ArrowRight, Bot, ShoppingCart, ExternalLink, X } from 'lucide-react';
+import { motion, AnimatePresence } from 'motion/react';
+import { useState } from 'react';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from './ui/card';
 import { Button } from './ui/button';
 
@@ -56,6 +57,8 @@ const services = [
 ];
 
 export default function Services() {
+  const [showProjectModal, setShowProjectModal] = useState(false);
+
   const enquireAboutService = (serviceTitle: string) => {
     const subject = `Enquiry: ${serviceTitle}`;
     const body = `Hello Mtika Technologies,\n\nI am interested in your ${serviceTitle} service and would like to learn more.\n\nPlease get back to me at your earliest convenience.\n\nThank you.`;
@@ -199,13 +202,11 @@ export default function Services() {
                 {'projectUrl' in service && service.projectUrl && (
                   <motion.div whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }} className="mt-3">
                     <Button
-                      asChild
+                      onClick={() => setShowProjectModal(true)}
                       className="w-full bg-primary hover:bg-primary/90 text-primary-foreground gap-2"
                     >
-                      <a href={service.projectUrl} target="_blank" rel="noopener noreferrer">
-                        <ExternalLink className="h-4 w-4" />
-                        View Recent Project
-                      </a>
+                      <ExternalLink className="h-4 w-4" />
+                      View Recent Project
                     </Button>
                   </motion.div>
                 )}
@@ -215,6 +216,88 @@ export default function Services() {
           ))}
         </motion.div>
       </div>
+
+      <AnimatePresence>
+        {showProjectModal && (
+          <motion.div
+            className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            onClick={() => setShowProjectModal(false)}
+          >
+            <motion.div
+              className="bg-background border border-primary/20 rounded-2xl shadow-2xl max-w-lg w-full p-8 relative"
+              initial={{ opacity: 0, scale: 0.9, y: 20 }}
+              animate={{ opacity: 1, scale: 1, y: 0 }}
+              exit={{ opacity: 0, scale: 0.9, y: 20 }}
+              transition={{ type: 'spring', stiffness: 300, damping: 25 }}
+              onClick={(e) => e.stopPropagation()}
+            >
+              <button
+                type="button"
+                aria-label="Close"
+                onClick={() => setShowProjectModal(false)}
+                className="absolute top-4 right-4 text-muted-foreground hover:text-foreground transition-colors"
+              >
+                <X className="h-5 w-5" />
+              </button>
+
+              <div className="flex items-center gap-3 mb-4">
+                <div className="bg-primary/10 p-3 rounded-full border border-primary/20">
+                  <Globe className="h-6 w-6 text-primary" />
+                </div>
+                <div>
+                  <p className="text-xs text-muted-foreground uppercase tracking-wide font-medium">Recent Project</p>
+                  <h3 className="text-xl font-bold text-foreground">Doctor Appointment System</h3>
+                </div>
+              </div>
+
+              <p className="text-muted-foreground mb-4 leading-relaxed">
+                A full-stack web application designed to simplify how patients book and manage appointments with doctors. The system provides a seamless experience for both patients and medical staff.
+              </p>
+
+              <ul className="space-y-2 mb-6">
+                {[
+                  "Online appointment booking & scheduling",
+                  "Doctor availability management",
+                  "Patient registration & profiles",
+                  "Appointment reminders & notifications",
+                  "Admin dashboard for managing bookings",
+                ].map((feature, i) => (
+                  <li key={i} className="flex items-center text-sm text-foreground">
+                    <ArrowRight className="h-4 w-4 mr-2 text-primary shrink-0" />
+                    {feature}
+                  </li>
+                ))}
+              </ul>
+
+              <div className="flex gap-3">
+                <Button
+                  variant="outline"
+                  className="flex-1 border-primary/20"
+                  onClick={() => setShowProjectModal(false)}
+                >
+                  Close
+                </Button>
+                <Button
+                  asChild
+                  className="flex-1 bg-primary hover:bg-primary/90 text-primary-foreground gap-2"
+                >
+                  <a
+                    href="https://dependable-illumination-production-3c79.up.railway.app"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    <ExternalLink className="h-4 w-4" />
+                    Visit Site
+                  </a>
+                </Button>
+              </div>
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </section>
   );
 }
